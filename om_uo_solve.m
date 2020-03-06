@@ -9,22 +9,25 @@ function [xk,dk,alk,iWk,betak,Hk] = om_uo_solve(x,f,g,h,epsG,kmax,almax,almin,rh
     %   Search Direction:
     %       isd=1 : GM; isd=2 : CGM; isd=3 : BFGS; 
     %       icg=1 : FR; icg=2 : PR+;
-    %       irc=0 : no restart; irc=1 : RC1; irc=2 : RC2;    
+    %       irc=0 : no restart; irc=1 : RC1; irc=2 : RC2; 
+
     
  %FALTA: QUASI-NEWTON
- %     : CGM AMB RESTART
+ %     : CGM AMB RC1
+ %     : STEPLENGHT : ELS
 
     xk = [x]; dk = []; alk = [];
     iWk = []; betak = []; Hk = [h(x)]; 
-    k = 0;x_1 = 0;
+    k = 0; x_1 = x; d_1 = 0;
     
     while norm(g(x)) >= epsG && k < kmax
         
-        [d, b] = uo_descent_direction(isd, icg, irc, nu, x_1, x, g);
+        [d, b] = uo_descent_direction(isd, icg, irc, nu, x_1, x, g, d_1);
         [al, iWi] = uo_BLS(x,d,f,g,almax,almin,rho,c1,c2,iW);
         
         x = x + al * d;
         
+        d_1 = d;
         xk = [xk, x]; dk = [dk, d]; alk = [alk, al];
         iWk = [iWk, iWi]; betak = [betak, b]; Hk = [Hk, h(x)];
         k = k + 1;
