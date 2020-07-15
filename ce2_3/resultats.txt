@@ -1,0 +1,11 @@
+	
+	El GM metod convergeix i troba la solució correcta amb 1233 iteracions.
+
+	El CGM-FR no convergeix i per tant no troba la solució, a partir de la iteració 10,
+	les direccions deixen de ser de descens i el valor de x1 i x2 es dispara.
+	Amb RC1 tampoc funciona, però amb RC2 convergeix en 289 iteracions en la solució correcta.
+ 	
+	El CGM-PR+ tampoc convergeix per les mateixes raons que el CGM-FR, amb RC1 si que convergeix 
+	en la solució correcta, amb 71 iteracions i amb RC2 en 126 iteracions.
+
+	Amb el mètode QN-BFGS convergeix en la solució correcta en 189 iteracions.
